@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { CardSection } from './common';
+import * as actions from '../actions';
 
 class ListItem extends Component {
   render() {
-    const { title } = this.props.library;
+    const {
+      library: { title, id },
+      selectLibrary
+    } = this.props;
     const { titleStyle } = styles;
     return (
-      <CardSection>
-        <Text style={titleStyle}>{title}</Text>
-      </CardSection>
+      <TouchableWithoutFeedback onPress={() => selectLibrary(id)}>
+        <View>
+          <CardSection>
+            <Text style={titleStyle}>{title}</Text>
+          </CardSection>
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -21,4 +30,5 @@ const styles = {
   }
 };
 
-export default ListItem;
+// connect(state, action)
+export default connect(null, actions)(ListItem);
